@@ -1,4 +1,4 @@
-#The basics i.e. plotting and redshifting SEDs
+#The basics i.e. plotting the SEDs
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -50,8 +50,8 @@ plt.loglog(lam_phot,F_phot,"ro",markersize=0.5)
 
 plt.ylabel("$\lambda F_\lambda$ ($10^{-10}$ $ergs$ $s^{-1}$ $cm^{-2}$)")
 plt.xlabel("$\lambda$ ($\mu$m)")
-plt.xlim(0.1,2*1e3)
-plt.ylim(5*1.e-3,10*1e1)
+plt.xlim(0.1,1e6)
+plt.ylim(5*1.e-6,10*1e1)
 plt.title("Arp 220 SED")
 #plt.savefig("Arp_220_SED.png",dpi=300)
 #plt.clf()
