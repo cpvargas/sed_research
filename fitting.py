@@ -31,12 +31,19 @@ FIR_F = FIR_lam*FIR_f*10000000*1.e10
 #extrapolation of both sides (initial and final)
 FIR_lam_i = FIR_lam[0]-(FIR_lam[2]-FIR_lam[1])
 FIR_F_i = FIR_F[0:5].mean()
-L = len(FIR_lam)
-FIR_lam_f = FIR_lam[L-1]+(FIR_lam[L-2]-FIR_lam[L-3])
-FIR_F_f = FIR_F[L-5:L-1].mean()
+#L = len(FIR_lam)
+#FIR_lam_f = FIR_lam[L-1]+(FIR_lam[L-2]-FIR_lam[L-3])
+#FIR_F_f = FIR_F[L-5:L-1].mean()
 
-FIR_F = np.concatenate((FIR_F_i,FIR_F,FIR_F_f),axis=None)
-FIR_lam = np.concatenate((FIR_lam_i,FIR_lam,FIR_lam_f),axis=None)
+#FIR_F = np.concatenate((FIR_F_i,FIR_F,FIR_F_f),axis=None)
+#FIR_lam = np.concatenate((FIR_lam_i,FIR_lam,FIR_lam_f),axis=None)
+
+FIR_F = np.concatenate((FIR_F_i,FIR_F),axis=None)
+FIR_lam = np.concatenate((FIR_lam_i,FIR_lam),axis=None)
+
+mask_FIR = FIR_lam<185.
+FIR_F = FIR_F[mask_FIR]
+FIR_lam = FIR_lam[mask_FIR]
 
 c = 299792458 #speed of light m s^-1
 
@@ -44,18 +51,18 @@ fname = "ARP_220_phot_NED.txt"
 
 nu_phot,f_phot =np.loadtxt(fname,comments="#", usecols=(0,1),unpack=True)
 
-F_phot = f_phot*1.e-23*nu_phot*1.e10
-lam_phot = (c/nu_phot)*1.e6 
+F_phot0 = f_phot*1.e-23*nu_phot*1.e10
+lam_phot0 = (c/nu_phot)*1.e6 
 
-mask = lam_phot>200.
+mask = lam_phot0>170.
 
-F_phot = F_phot[mask]
-lam_phot = lam_phot[mask]
+F_phot = F_phot0[mask]
+lam_phot = lam_phot0[mask]
 
 F_phot_s = []
 lam_phot_s = []
 
-bins = np.logspace(2.2,6,30)
+bins = np.logspace(2.23,6,40)
 for i in range(len(bins)-1):
     mask0 = lam_phot > bins[i]
     mask1 = lam_phot < bins[i+1]
@@ -73,13 +80,13 @@ for i in range(len(bins)-1):
 F_phot_s = np.asarray(F_phot_s)
 lam_phot_s = np.asarray(lam_phot_s)
 
-xs = np.logspace(2.3,6,500)
+xs = np.logspace(2.26,6,500)
 interp = np.interp(xs,lam_phot_s,F_phot_s)
 
 logx = np.log(lam_phot_s)
 logy = np.log(F_phot_s)
 interp = UnivariateSpline(logx, logy)
-interp.set_smoothing_factor(0.5)
+interp.set_smoothing_factor(1.3)
 yfit = lambda x: np.exp(interp(np.log(x)))
 
 
@@ -111,26 +118,35 @@ fnuSnu3 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z3).value**2)
 lam_new3 = lam_tot*(1.+z3)
 
 z4 = 0.01813
-lam_new3 = lam_tot*(1.+z4)
-fnuSnu3 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z4).value**2)
+lam_new4 = lam_tot*(1.+z4)
+fnuSnu4 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z4).value**2)
 
-plt.loglog(lam_phot_s,F_phot_s,"*",markersize=5.0)
-plt.loglog(lam_phot,F_phot,"ro",markersize=0.5)
-#plt.loglog(xs,spl(xs),"--")
-#plt.loglog(xs,interp,"--")
-plt.loglog(xs,yfit(xs),"--",color="gray")
+plt.loglog(lam_phot_s,F_phot_s,"b*",markersize=5.0)
+plt.loglog(lam_phot,F_phot,"rs",markersize=2.0)
 
+
+##plt.loglog(xs,spl(xs),"--")
+##plt.loglog(xs,interp,"--")
+
+plt.loglog(xs,yfit(xs),"--",color="gray",)
 plt.loglog(FIR_lam,FIR_F,"co",markersize=0.5)
-
 plt.loglog(Lam,F,"go",markersize=0.5)
+plt.loglog(lam_phot0,F_phot0,"m*",markersize=0.5)
+plt.xlim(0.03,500000)
+plt.ylim(1.e-7,1.e2)
+plt.axes().set_aspect(0.4)
 
+plt.title("ARP 220 SED")
+plt.ylabel("$\\nu F_\\nu$ [($10^{-10}$ $ergs$ $s^{-1}$ $cm^{-2}$]")
+plt.xlabel("$\lambda$ [$\mu$m]")
 
-plt.loglog(lam_new1,fnuSnu1,"mo",markersize=0.5)
-plt.loglog(lam_new2,fnuSnu2,"yo",markersize=0.5)
-plt.loglog(lam_new3,fnuSnu3,"bo",markersize=0.5)
-plt.loglog(lam_new3,fnuSnu3,"go",markersize=0.5)
+#plt.loglog(lam_new1,fnuSnu1,"m-",markersize=0.5, label="z=4")
+#plt.loglog(lam_new2,fnuSnu2,"y-",markersize=0.5, label="z=5")
+#plt.loglog(lam_new3,fnuSnu3,"b-",markersize=0.5, label="z=1")
+#plt.loglog(lam_new4,fnuSnu4,"g-",markersize=0.5, label="z=0.01813")
+#plt.legend()
+plt.savefig("ARP_220_SED.png",dpi=300)
 
-plt.show()
 
 
 
