@@ -17,6 +17,8 @@ for filename in os.listdir(directory):
 
 fig = figure(num=None, figsize=(24, 4), dpi=72, facecolor='w', edgecolor='k')
 
+plt.subplots_adjust(top=0.99,bottom=0.11,left=0.025,right=0.995,hspace=0.2,wspace=0.2)
+
 for F in filters:
     x,y = np.loadtxt(F,usecols=(0,1),unpack=True)
     x = x*0.0001
