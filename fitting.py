@@ -105,47 +105,63 @@ lam_tot = lam_tot/(1.+z)
 
 
 #Trying a high redsfhit
-z1 = 4.
-fnuSnu1 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z1).value**2)
-lam_new1 = lam_tot*(1.+z1)
+z6 = 6.
+fnuSnu6 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z6).value**2)
+lam_new6 = lam_tot*(1.+z6)
 
-z2 = 5.
-fnuSnu2 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z2).value**2)
-lam_new2 = lam_tot*(1.+z2)
+z5 = 5.
+fnuSnu5 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z5).value**2)
+lam_new5 = lam_tot*(1.+z5)
 
-z3 = 1.
+z4 = 4.
+fnuSnu4 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z4).value**2)
+lam_new4 = lam_tot*(1.+z4)
+
+z3 = 3.
 fnuSnu3 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z3).value**2)
 lam_new3 = lam_tot*(1.+z3)
 
-z4 = 0.01813
-lam_new4 = lam_tot*(1.+z4)
-fnuSnu4 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z4).value**2)
+z2 = 2.
+fnuSnu2 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z2).value**2)
+lam_new2 = lam_tot*(1.+z2)
 
-plt.loglog(lam_phot_s,F_phot_s,"b*",markersize=5.0)
-plt.loglog(lam_phot,F_phot,"rs",markersize=2.0)
+z1 = 1.
+fnuSnu1 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z1).value**2)
+lam_new1 = lam_tot*(1.+z1)
+
+z0 = 0.01813
+lam_new0 = lam_tot*(1.+z0)
+fnuSnu0 = nuLnu/(4*np.pi*Planck15.luminosity_distance(z0).value**2)
+
+#plt.loglog(lam_phot_s,F_phot_s,"b*",markersize=5.0)
+#plt.loglog(lam_phot,F_phot,"rs",markersize=2.0)
 
 
 ##plt.loglog(xs,spl(xs),"--")
 ##plt.loglog(xs,interp,"--")
 
-plt.loglog(xs,yfit(xs),"--",color="gray",)
-plt.loglog(FIR_lam,FIR_F,"co",markersize=0.5)
-plt.loglog(Lam,F,"go",markersize=0.5)
-plt.loglog(lam_phot0,F_phot0,"m*",markersize=0.5)
-plt.xlim(0.03,500000)
-plt.ylim(1.e-7,1.e2)
+#plt.loglog(xs,yfit(xs),"--",color="gray",)
+#plt.loglog(FIR_lam,FIR_F,"co",markersize=0.5)
+#plt.loglog(Lam,F,"go",markersize=0.5)
+#plt.loglog(lam_phot0,F_phot0,"m*",markersize=0.5)
+plt.xlim(0.01,500000)
+plt.ylim(1.e-9,2.e-2)
 plt.axes().set_aspect(0.4)
 
 plt.title("ARP 220 SED")
 plt.ylabel("$\\nu F_\\nu$ [($10^{-10}$ $ergs$ $s^{-1}$ $cm^{-2}$]")
 plt.xlabel("$\lambda$ [$\mu$m]")
 
-#plt.loglog(lam_new1,fnuSnu1,"m-",markersize=0.5, label="z=4")
-#plt.loglog(lam_new2,fnuSnu2,"y-",markersize=0.5, label="z=5")
-#plt.loglog(lam_new3,fnuSnu3,"b-",markersize=0.5, label="z=1")
-#plt.loglog(lam_new4,fnuSnu4,"g-",markersize=0.5, label="z=0.01813")
-#plt.legend()
-plt.savefig("ARP_220_SED.png",dpi=300)
+plt.loglog(lam_new6,fnuSnu6,"m-",markersize=0.5, label="z=6")
+plt.loglog(lam_new5,fnuSnu5,"y-",markersize=0.5, label="z=5")
+plt.loglog(lam_new4,fnuSnu4,"b-",markersize=0.5, label="z=4")
+plt.loglog(lam_new3,fnuSnu3,"g-",markersize=0.5, label="z=3")
+plt.loglog(lam_new2,fnuSnu2,"r-",markersize=0.5, label="z=2")
+plt.loglog(lam_new1,fnuSnu1,"c-",markersize=0.5, label="z=1")
+#plt.loglog(lam_new0,fnuSnu0,"o-",markersize=0.5, label="z=0.01813")
+plt.legend()
+plt.savefig("ARP_220_SED_redshifts.png",dpi=300)
+#plt.show()
 
 
 
