@@ -72,7 +72,7 @@ for i in range(len(bins)-1):
         F_phot_s.append(F_phot[mask].mean())
         lam_phot_s.append(mean_bin)
     if len(F_phot[mask])==1:
-        F_phot_s.append(F_phot[mask])
+        F_phot_s.append(F_phot[mask][0])
         lam_phot_s.append(mean_bin)
     if len(F_phot[mask]==0):
         pass
