@@ -1,0 +1,9 @@
+#filtername lam_c      delt_lam   5sigma   filename                   eazy_tag
+F435W        0.431     0.073      28.8     HST_ACS_WFC.F435W.dat      1
+F606W        0.589     0.157      28.8     HST_ACS_WFC.F606W.dat      4
+F814W        0.811     0.166      29.1     HST_ACS_WFC.F814W.dat      6
+F105W        1.050     0.300      29.6     HST_WFC3_IR.F105W.dat      202
+F125W        1.250     0.300      29.4     HST_WFC3_IR.F125W.dat      203
+F140W        1.400     0.400      29.4     HST_WFC3_IR.F140W.dat      204
+F160W        1.545     0.290      29.3     HST_WFC3_IR.F160W.dat      205
+Ks           2.146     0.324      26.2     Paranal_HAWKI.Ks.dat       269
