@@ -195,7 +195,7 @@ class sed(object):
         if title=="y":
             plt.title("z={}".format(self.z))
             
-    def plot_filters(self,norm,label="n":
+    def plot_filters(self,norm,label="n"):
         """
         Plots the transmission filters 
         """
