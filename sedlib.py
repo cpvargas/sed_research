@@ -200,8 +200,8 @@ class sed(object):
         Plots the transmission filters 
         """
         for Filter in self.filters:
-            lam = mysed.filters[Filter]["lam"]
-            trans = mysed.filters[Filter]["trans"]*norm
+            lam = self.filters[Filter]["lam"]
+            trans = self.filters[Filter]["trans"]*norm
             plt.plot(lam,trans,label = Filter)
             
     def export_phot(self,program="EAZY"):
