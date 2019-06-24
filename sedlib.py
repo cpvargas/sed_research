@@ -195,14 +195,17 @@ class sed(object):
         if title=="y":
             plt.title("z={}".format(self.z))
             
-    def plot_filters(self,norm):
+    def plot_filters(self,norm,label="n":
         """
         Plots the transmission filters 
         """
         for Filter in self.filters:
             lam = self.filters[Filter]["lam"]
             trans = self.filters[Filter]["trans"]*norm
-            plt.plot(lam,trans,label = Filter)
+            if label=="y":
+                plt.plot(lam,trans,label = Filter)
+            if label=="n":
+                plt.plot(lam,trans)
             
     def export_phot(self,program="EAZY"):
         """
